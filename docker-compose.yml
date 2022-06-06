@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  users:
+    container_name: users
+    build:
+      context: ./
+      dockerfile: ./services/users/Dockerfile
+    volumes:
+      - './services/users:/usr/src/app'
+    ports:
+      - 8004:8000
+    environment:
+      - DATABASE_URL=postgresql://postgres:postgres@users-db:5432/users
+    depends_on:
+      - users-db
+    links:
+      - users-db
+  
+  users-db:
+    container_name: users-db
+    build:
+      context: ./services/users/project/db
+      dockerfile: Dockerfile
+    ports:
+      - 5435:5432
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
