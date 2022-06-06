@@ -7,9 +7,9 @@ services:
       context: ./
       dockerfile: ./services/users/Dockerfile
     volumes:
-      - './services/users:/usr/src/app'
+      - ./services/users:/usr/src/app/
     ports:
-      - 8004:8000
+      - 8002:8000
     environment:
       - DATABASE_URL=postgresql://postgres:postgres@users-db:5432/users
     depends_on:
